@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Descubre perfumes y explora nuevas fragancias en formato decant con NonDecants.">
+  <meta name="theme-color" content="#722f37">
+  <title>NonDecants | Descubre tu próxima fragancia</title>
+  <style>
+    :root {
+      --wine: #722f37;
+      --cream: #fffdd0;
+      --ink: #29201f;
+      --muted: #746a66;
+      --line: #e9e0d5;
+      --paper: #fffef8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+    button, select { font: inherit; }
+
+    .topline {
+      background: var(--wine);
+      color: var(--cream);
+      text-align: center;
+      font-size: 11px;
+      padding: 9px 12px;
+      letter-spacing: .5px;
+    }
+
+    header {
+      padding: 14px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--wine);
+      font: bold 22px Georgia, serif;
+      letter-spacing: -.7px;
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      border: 1px solid #eadfc6;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    nav a:hover { text-decoration: underline; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5%;
+      padding: 48px 6%;
+      align-items: center;
+    }
+
+    .visual {
+      background: var(--cream);
+      min-height: 365px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 3px;
+    }
+
+    .visual::before,
+    .visual::after {
+      content: "";
+      position: absolute;
+      border: 1px solid #722f3726;
+      border-radius: 50%;
+      width: 270px;
+      height: 270px;
+    }
+
+    .visual::after {
+      width: 320px;
+      height: 320px;
+    }
+
+    .bottle {
+      position: relative;
+      z-index: 1;
+      width: 95px;
+      height: 210px;
+      border: 2px solid #bca58b;
+      border-radius: 13px 13px 18px 18px;
+      background: linear-gradient(
+        90deg, #f4e5bf, #fff9e9 35%, #e8d4a8
+      );
+      box-shadow: 12px 15px 25px #4d303020;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bottle::before {
+      content: "";
+      position: absolute;
+      top: -34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 5px 5px 0 0;
+      background: var(--wine);
+      border: 2px solid #5b2229;
+    }
+
+    .bottle::after {
+      content: "NON\A DECANTS\A\A TU PRÓXIMO AROMA";
+      white-space: pre;
+      text-align: center;
+      font: 10px/1.7 Georgia, serif;
+      letter-spacing: 1px;
+      color: var(--wine);
+      padding: 9px 4px;
+      border-top: 1px solid #722f3755;
+      border-bottom: 1px solid #722f3755;
+      width: 80px;
+    }
+
+    .visual-note {
+      position: absolute;
+      bottom: 17px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--wine);
+      z-index: 2;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--wine);
+      font-weight: bold;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: normal;
+      font-size: clamp(32px, 4.4vw, 52px);
+      line-height: 1.1;
+      margin: 15px 0;
+    }
+
+    h2 {
+      font: normal clamp(25px, 3vw, 36px)/1.2 Georgia, serif;
+      margin: 10px 0 16px;
+    }
+
+    h3 {
+      font: normal 20px Georgia, serif;
+      margin: 0 0 9px;
+    }
+
+    p { font-size: 14px; }
+    .muted { color: var(--muted); }
+
+    .price {
+      font: 27px Georgia, serif;
+      color: var(--wine);
+      margin: 20px 0 4px;
+    }
+
+    .pending {
+      font-size: 11px;
+      color: #8a4c2e;
+      background: #fff1df;
+      border: 1px solid #ecd4b8;
+      padding: 5px 8px;
+      display: inline-block;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: bold;
+      display: block;
+      margin: 18px 0 7px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cfc3b5;
+      background: white;
+      border-radius: 2px;
+      color: var(--ink);
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      padding: 13px 16px;
+      text-decoration: none;
+      border: 1px solid var(--wine);
+      background: var(--wine);
+      color: var(--cream);
+      width: 100%;
+      margin-top: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      letter-spacing: .4px;
+    }
+
+    .btn:hover { filter: brightness(1.08); }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--wine);
+    }
+
+    .trust {
+      font-size: 11px;
+      text-align: center;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .band {
+      padding: 45px 6%;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .band p {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .section { padding: 54px 6%; }
+    .center { text-align: center; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .card {
+      padding: 23px 19px;
+      border: 1px solid var(--line);
+      background: #fffefa;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      color: var(--wine);
+      border-radius: 50%;
+      font: 20px Georgia, serif;
+      margin-bottom: 16px;
+    }
+
+    .card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .specs {
+      max-width: 760px;
+      margin: 25px auto 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .spec {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 13px 4px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .spec span:first-child { color: var(--muted); }
+    .spec span:last-child { text-align: right; font-weight: bold; }
+
+    .experience {
+      background: #f8f1e7;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+      align-items: center;
+      padding: 40px 6%;
+    }
+
+    .steps {
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      padding: 13px 0 13px 43px;
+      position: relative;
+      border-bottom: 1px solid #e4d9cc;
+      font-size: 13px;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--wine);
+      border-radius: 50%;
+      color: var(--wine);
+    }
+
+    .proof {
+      background: #fffefa;
+      border: 1px solid var(--line);
+      padding: 24px;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    details {
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
+      text-align: left;
+    }
+
+    summary {
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    summary::after {
+      content: "+";
+      color: var(--wine);
+      font-size: 19px;
+    }
+
+    details[open] summary::after { content: "−"; }
+
+    details p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .gallery div {
+      background: var(--cream);
+      min-height: 115px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: var(--wine);
+      font-size: 12px;
+    }
+
+    .gallery small {
+      font-size: 10px;
+      color: #746a66;
+    }
+
+    .final {
+      background: var(--wine);
+      color: var(--cream);
+      padding: 48px 7%;
+      text-align: center;
+    }
+
+    .final p {
+      max-width: 500px;
+      margin: 0 auto 18px;
+      color: #fff4e7;
+    }
+
+    .final .btn {
+      max-width: 300px;
+      margin: 12px auto;
+      background: var(--cream);
+      color: var(--wine);
+      border-color: var(--cream);
+    }
+
+    .final .btn.secondary {
+      background: transparent;
+      color: var(--cream);
+      border-color: #e8cdd0;
+    }
+
+    footer {
+      background: #251c1c;
+      color: #f6e9d9;
+      padding: 27px 6%;
+      font-size: 11px;
+    }
+
+    footer a { color: #f6e9d9; }
+
+    .footrow {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .disclaimer {
+      opacity: .75;
+      margin-top: 20px;
+      font-size: 10px;
+    }
+
+    .mobile-cta { display: none; }
+
+    @media (max-width: 620px) {
+      header { padding: 12px 5%; }
+      .brand { font-size: 19px; }
+      .brand img { width: 45px; height: 45px; }
+      nav { gap: 10px; }
+      nav a { font-size: 11px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 25px 5%;
+        gap: 26px;
+      }
+
+      .visual { min-height: 270px; }
+      .grid { grid-template-columns: 1fr; gap: 10px; }
+      .card { padding: 19px; }
+      .section { padding: 38px 5%; }
+      .band { padding: 36px 5%; }
+
+      .experience {
+        grid-template-columns: 1fr;
+        padding: 32px 5%;
+        gap: 10px;
+      }
+
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .spec { font-size: 12px; }
+
+      .mobile-cta {
+        display: block;
+        position: sticky;
+        bottom: 0;
+        padding: 8px 12px;
+        background: var(--paper);
+        border-top: 1px solid var(--line);
+        z-index: 5;
+      }
+
+      .mobile-cta .btn { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topline">EXPLORA · PRUEBA · ENCUENTRA TU AROMA</div>
+
+  <header>
+    <a class="brand" href="#inicio" aria-label="NonDecants, inicio">
+      <img src="assets/nondecants-logo.png" alt="Logo NonDecants">
+      <span>NonDecants</span>
+    </a>
+    <nav aria-label="Navegación principal">
+      <a href="#detalles">Detalles</a>
+      <a href="#faq">Preguntas frecuentes</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="visual" role="img" aria-label="Ilustración conceptual de un atomizador; sustituir por fotografía real del producto">
+        <div class="bottle"></div>
+        <div class="visual-note">TU PRÓXIMA FRAGANCIA EMPIEZA AQUÍ</div>
+      </div>
+
+      <div>
+        <div class="eyebrow">Perfumería nicho · A tu manera</div>
+        <h1>Tu próximo aroma favorito, sin comprar el frasco completo.</h1>
+        <p>Descubre nuevas fragancias con decants en formato compacto. Prueba, compara y encuentra el perfume que encaja contigo antes de dar el siguiente paso.</p>
+
+        <div class="price">Precio: [PENDIENTE]</div>
+        <span class="pending">Fragancia y precio por confirmar</span>
+
+        <label class="label" for="scent">Fragancia</label>
+        <select id="scent">
+          <option value="Decant de perfume [Marca] [Fragancia]">Selecciona una fragancia</option>
+          <option>Decant de perfume [Marca] [Fragancia] — 2 ml</option>
+          <option>Decant de perfume [Marca] [Fragancia] — 5 ml</option>
+          <option>Decant de perfume [Marca] [Fragancia] — 10 ml</option>
+        </select>
+
+        <label class="label" for="size">Formato</label>
+        <select id="size">
+          <option value="por confirmar">Selecciona un formato</option>
+          <option value="2 ml">2 ml · Primera exploración</option>
+          <option value="5 ml">5 ml · Varias ocasiones</option>
+          <option value="10 ml">10 ml · Más aplicaciones</option>
+        </select>
+
+        <a class="btn" id="buy" href="https://wa.me/593981260787" target="_blank" rel="noopener">CONSULTAR DISPONIBILIDAD</a>
+        <a class="btn secondary" href="mailto:estudianteroi@gmail.com?subject=Asesoramiento%20de%20fragancias%20NonDecants">QUIERO ASESORAMIENTO</a>
+        <div class="trust">Atención personalizada · Información clara · Compra informada</div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="eyebrow">La propuesta NonDecants</div>
+      <h2>Más aromas. Decisiones más seguras.</h2>
+      <p>Explora la perfumería nicho a una fracción del desembolso de un frasco completo. Conoce las notas, compara opciones y elige con más información, según tus gustos y tu presupuesto.</p>
+    </section>
+
+    <section class="section">
+      <div class="center">
+        <div class="eyebrow">Tu experiencia</div>
+        <h2>Descubrir también es parte del lujo.</h2>
+        <p class="muted">Una forma práctica de explorar el mundo de las fragancias.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="icon">01</div>
+          <h3>Explora sin precipitarte</h3>
+          <p>Prueba una cantidad más pequeña antes de decidir si quieres invertir en un frasco completo.</p>
+        </article>
+        <article class="card">
+          <div class="icon">02</div>
+          <h3>Encuentra tu perfil</h3>
+          <p>Compara familias olfativas y notas para descubrir qué aromas encajan mejor contigo.</p>
+        </article>
+        <article class="card">
+          <div class="icon">03</div>
+          <h3>Llévalo contigo</h3>
+          <p>El formato atomizador de viaje es compacto y práctico para distintas ocasiones.</p>
+        </article>
+      </div>
+
+      <div class="proof">
+        <strong>La confianza importa.</strong><br>
+        Consulta la procedencia, la presentación y la información disponible de cada decant antes de comprar.
+        <span class="muted">La documentación de autenticidad, el embalaje y las condiciones de envío están pendientes de verificación.</span>
+      </div>
+    </section>
+
+    <section id="detalles" class="section" style="background:#fffaf0">
+      <div class="center">
+        <div class="eyebrow">Ficha técnica</div>
+        <h2>Conoce lo que estás eligiendo.</h2>
+        <p class="muted">La ficha se completará con los datos verificados de cada fragancia.</p>
+      </div>
+
+      <div class="specs">
+        <div class="spec"><span>Producto</span><span>Decant de perfume</span></div>
+        <div class="spec"><span>Marca y fragancia</span><span>[PENDIENTE]</span></div>
+        <div class="spec"><span>Volumen</span><span>2 ml / 5 ml / 10 ml [PENDIENTE]</span></div>
+        <div class="spec"><span>Concentración</span><span>[PENDIENTE]</span></div>
+        <div class="spec"><span>Familia olfativa y notas</span><span>[PENDIENTE]</span></div>
+        <div class="spec"><span>Precio y disponibilidad</span><span>[PENDIENTE]</span></div>
+        <div class="spec"><span>Envío y plazo estimado</span><span>[PENDIENTE]</span></div>
+      </div>
+    </section>
+
+    <section class="experience">
+      <div>
+        <div class="eyebrow">Cómo elegir</div>
+        <h2>Encuentra una fragancia que hable de ti.</h2>
+        <p>¿No sabes por dónde empezar? Cuéntanos qué perfumes utilizas, qué aromas te gustan y en qué ocasión quieres llevarlo.</p>
+        <a class="btn" href="https://wa.me/593981260787?text=Hola%20NonDecants%2C%20quiero%20ayuda%20para%20elegir%20una%20fragancia." target="_blank" rel="noopener">AYÚDAME A ELEGIR</a>
+      </div>
+
+      <div>
+        <ol class="steps">
+          <li>Comparte tus aromas favoritos o perfumes conocidos.</li>
+          <li>Indica la ocasión, el clima y tu presupuesto.</li>
+          <li>Consulta las opciones y sus notas olfativas.</li>
+          <li>Revisa el precio, formato y condiciones antes de comprar.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="center">
+        <div class="eyebrow">Galería del producto</div>
+        <h2>Un vistazo a tu próxima experiencia.</h2>
+        <p class="muted">Espacios reservados para fotografías reales. No se presentan imágenes ilustrativas como si fueran el producto final.</p>
+      </div>
+
+      <div class="gallery">
+        <div>[PENDIENTE]<small>Fotografía real del atomizador</small></div>
+        <div>[PENDIENTE]<small>Detalle de etiqueta y volumen</small></div>
+        <div>[PENDIENTE]<small>Embalaje y protección para envío</small></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq" style="background:#fffaf0">
+      <div class="center">
+        <div class="eyebrow">Resolvemos tus dudas</div>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+
+      <details>
+        <summary>¿Qué es un decant?</summary>
+        <p>Es una cantidad de perfume presentada en un recipiente más pequeño, normalmente con atomizador. No debe confundirse con el frasco comercial original de la marca.</p>
+      </details>
+      <details>
+        <summary>¿El perfume es original?</summary>
+        <p>Antes de comprar, solicita información verificable sobre la procedencia y el proceso de preparación. NonDecants debe incorporar evidencias de autenticidad y trazabilidad antes de publicar la ficha definitiva.</p>
+      </details>
+      <details>
+        <summary>¿Por qué varía el precio?</summary>
+        <p>Puede depender de la fragancia, su concentración, el volumen y el coste del perfume de origen. El precio específico de cada formato está pendiente de confirmación.</p>
+      </details>
+      <details>
+        <summary>¿Cómo elijo las notas olfativas?</summary>
+        <p>Empieza por los aromas que ya disfrutas y consulta las notas de salida, corazón y fondo de cada perfume. Podemos orientarte según tus preferencias, ocasión y clima.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto dura la fragancia?</summary>
+        <p>Depende de la fórmula, la piel, el clima y la aplicación. No es posible garantizar una duración exacta para todas las personas.</p>
+      </details>
+      <details>
+        <summary>¿Cómo se envía y qué ocurre si llega dañado?</summary>
+        <p>Consulta las condiciones de envío, embalaje y resolución de incidencias antes de realizar el pedido. La política específica de NonDecants está pendiente de añadir.</p>
+      </details>
+      <details>
+        <summary>¿Puedo devolver un decant?</summary>
+        <p>Las condiciones dependerán de la política de devoluciones aplicable y de la normativa de consumo. Revisa las condiciones oficiales antes de comprar, especialmente en productos abiertos o desprecintados.</p>
+      </details>
+      <details>
+        <summary>¿Cómo debo utilizarlo?</summary>
+        <p>Pulveriza una pequeña cantidad siguiendo las indicaciones del producto. Evita ojos y mucosas, cierra el atomizador después de usarlo y guárdalo lejos del sol directo y del calor. Si tienes piel sensible, revisa los ingredientes y advertencias.</p>
+      </details>
+    </section>
+
+    <section class="final">
+      <div class="eyebrow" style="color:#fffdd0">Tu siguiente descubrimiento</div>
+      <h2>Elige por lo que te gusta, no solo por el frasco.</h2>
+      <p>Explora tus opciones con información clara y asesoramiento personalizado.</p>
+      <a class="btn" href="https://wa.me/593981260787?text=Hola%20NonDecants%2C%20quiero%20consultar%20un%20decant." target="_blank" rel="noopener">CONSULTAR Y COMPRAR</a>
+      <a class="btn secondary" href="mailto:estudianteroi@gmail.com?subject=Consulta%20NonDecants">CONTACTAR POR EMAIL</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footrow">
+      <div><strong style="font:20px Georgia,serif">NonDecants</strong><br>Perfumería nicho, a tu manera.</div>
+      <div>
+        Contacto: <a href="tel:+593981260787">+593 981 260 787</a><br>
+        <a href="mailto:estudianteroi@gmail.com">estudianteroi@gmail.com</a><br>
+        <a href="https://maps.app.goo.gl/G53XAyZD3CfHBfdt9?g_st=ic" target="_blank" rel="noopener">Ver ubicación en Google Maps</a>
+      </div>
+    </div>
+    <div class="disclaimer">
+      Prototipo de ficha ecommerce. Sustituir los datos pendientes antes de publicar. Añadir aviso de privacidad, condiciones de compra, política de envíos y devoluciones, información legal del vendedor y documentación aplicable. Verificar la jurisdicción de venta y los datos de contacto para el mercado objetivo.
+    </div>
+  </footer>
+
+  <div class="mobile-cta">
+    <a class="btn" href="https://wa.me/593981260787?text=Hola%20NonDecants%2C%20quiero%20consultar%20un%20decant." target="_blank" rel="noopener">CONSULTAR DISPONIBILIDAD</a>
+  </div>
+
+  <script>
+    (function () {
+      const scent = document.getElementById('scent');
+      const size = document.getElementById('size');
+      const buy = document.getElementById('buy');
+
+      function update() {
+        const msg =
+          'Hola NonDecants, quiero consultar disponibilidad y precio. ' +
+          'Fragancia: ' + scent.value +
+          '. Formato: ' + size.value +
+          '. ¿Me podéis confirmar procedencia, envío y condiciones de compra?';
+
+        buy.href = 'https://wa.me/593981260787?text=' +
+          encodeURIComponent(msg);
+      }
+
+      scent.addEventListener('change', update);
+      size.addEventListener('change', update);
+      update();
+    })();
+  </script>
+</body>
+</html>
